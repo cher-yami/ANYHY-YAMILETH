@@ -1,0 +1,31 @@
+server:
+  port: 8085
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8090/eureka
+  instance:
+    hostname: localhost
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enable: true
+      routes:
+        - id: gccc-libro-service
+          uri: lb://gccc-libro-service
+          predicates:
+            - Path=/libros/**
+
+        - id: gccc-usuario-service
+          uri: lb://gccc-usuario-service
+          predicates:
+            - Path=/usuario/**
+
+        - id: gccc-prestamo-service
+          uri: lb://gccc-prestamo-service
+          predicates:
+            - Path=/prestamo/**
